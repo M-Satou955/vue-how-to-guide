@@ -1,1 +1,19 @@
-/vite-project
+.DS_Store
+node_modules
+/dist
+package-lock.json
+
+# local env files
+.env.local
+.env.*.local
+
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+
