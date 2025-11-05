@@ -106,12 +106,12 @@ export default {
 #### Composition API
 
 Composition API では、インポートした各種 API 関数を使用してコンポーネントのロジックを定義する。
-SFC において、Composition API は通常、<script setup> と組み合わせて使用する。
+SFC において、Composition API は通常`<script setup>` と組み合わせて使用する。
 setup という属性をつけることで,Vue にコンパイル時の変形操作（コンパイルして CSS,JavaScript と HTML のファイルにすること？）を実行してほしいというヒントを伝えられるらしい。
 
 これによって定型的な書式がすくなり、記述が少なくなる
 
-options API と同じコンポーネントを、テンプレート部分は同一のまま、Composition API と <script setup> に置き換えたサンプル
+options API と同じコンポーネントを、テンプレート部分は同一のまま、Composition API と `<script setup>` に置き換えたサンプル
 
 ```vue
 <script setup>
@@ -135,6 +135,18 @@ onMounted(() => {
   <button @click="increment">Count is: {{ count }}</button>
 </template>
 ```
+
+Composition API は React Hooks と同レベルのロジック構成機能があるが重要な違いがある
+React Hooks はコンポーネントが更新されるたびに繰り返し実行されるなど、熟練した開発者でも予期せぬ挙動が起こり得るパターンがいくつもある。
+
+- Hooks は呼び出し順序に敏感で、条件付きではない
+
+Vue Composition API
+setup() または`<script setup>`
+のコードを一度だけ呼ぶ出すので、stale クロージャーなどの問題などは発生しない。
+Composition API の呼び出しは、呼び出しの順番に関係なく、条件付きで呼び出せる
+
+Vue Composition API のほうがフレームワーク側でよしなにしてくれるのっぽい？
 
 ### Vue アプリケーションの作成
 
@@ -163,3 +175,39 @@ import App from "./App.vue";
 
 const app = createApp(App);
 ```
+
+Vue のガイドにある多くの例では単一コンポーネントしか必要としないが、
+実際ののほとんどのアプリケーションではネスト化された、再利用性のあるコンポーネントツリーで構成
+ガイドの後半ではそれも扱うらしい。
+
+TODO アプリケーションのコンポーネントツリーの例
+
+```
+App (root component)
+├─ TodoList
+│ └─ TodoItem
+│ ├─ TodoDeleteButton
+│ └─ TodoEditButton
+└─ TodoFooter
+├─ TodoClearButton
+└─ TodoStatistics
+```
+
+アプリのマウント
+
+アプリケーションのインスタンスは.mount()メソッドが呼ばれるまでは何もレンダリングしない。
+インスタンスには「コンテナ」引数という、実際の DOM 要素か、セレクター文字列が必要
+
+`<div id="app"></div>`
+
+`app.mount('#app')`
+
+この .mount() メソッドはすべてのアプリの設定やアセットの登録が完了した後、常に呼ばれる必要がある。また、アセット登録をするメソッドとは異なり、返り値はアプリケーションのインスタンスではなく、ルートコンポーネントインスタンスであるということに注意。
+
+常に.mount()メソッドが呼ばれていないと行けない。
+
+複数アプリケーションのインスタンス
+createAPP API は同じページ内に複数の Vue コンポーネントが共存できる
+それぞれ独自の設定やグローバルアセットを備えたスコープを持てる
+
+もし Vue をサーバーレンダリングされた HTML を拡張するために使用していたり、大きなページの中で特定の
