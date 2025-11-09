@@ -2,11 +2,12 @@
 node_modules
 /dist
 package-lock.json
+.vite/
 
 # local env files
 .env.local
 .env.*.local
-
+deno.json
 
 # Editor directories and files
 .idea

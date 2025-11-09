@@ -1,6 +1,14 @@
 {
+  "tasks": {
+    "dev": "deno run -A npm:vite",
+    "build": "deno run -A npm:vite build",
+    "preview": "deno run -A npm:vite preview"
+  },
   "imports": {
     "@oak/oak": "jsr:@oak/oak@^17.1.6",
-    "@tajpouria/cors": "jsr:@tajpouria/cors@^1.2.1"
-  }
+    "@tajpouria/cors": "jsr:@tajpouria/cors@^1.2.1",
+    "vue": "npm:vue@^3.5.22",
+    "vite": "npm:vite@^7.1.12"
+  },
+  "nodeModulesDir": "auto"
 }
